@@ -37,9 +37,18 @@ app.get('/api/dashboard', async (req, res) => {
   if (!pool) return res.status(503).json({ error: 'DATABASE_URL is not configured' });
 
   const period = String(req.query.period || 'YTD 2026');
-  const now = new Date('2026-08-12T00:00:00Z');
-  const start = period === 'Juli 2026' ? new Date('2026-07-01T00:00:00Z') : period === 'Q3 2026' ? new Date('2026-07-01T00:00:00Z') : new Date('2026-01-01T00:00:00Z');
-  const end = period === 'Juli 2026' ? new Date('2026-08-01T00:00:00Z') : period === 'Q3 2026' ? new Date('2026-10-01T00:00:00Z') : now;
+  const now = new Date();
+  const year = now.getUTCFullYear();
+  const start = period === 'Juli 2026'
+    ? new Date(Date.UTC(2026, 6, 1))
+    : period === 'Q3 2026'
+      ? new Date(Date.UTC(2026, 6, 1))
+      : new Date(Date.UTC(year, 0, 1));
+  const end = period === 'Juli 2026'
+    ? new Date(Date.UTC(2026, 7, 1))
+    : period === 'Q3 2026'
+      ? new Date(Date.UTC(2026, 9, 1))
+      : now;
 
   try {
     const [summary, trend, regions, products] = await Promise.all([
@@ -49,15 +58,25 @@ app.get('/api/dashboard', async (req, res) => {
       pool.query(`SELECT p.name, COUNT(DISTINCT s.order_number) orders, COALESCE(SUM(s.net_amount),0) revenue FROM products p LEFT JOIN sales_orders s ON s.product_id=p.id AND s.status='completed' AND s.order_date >= $1 AND s.order_date < $2 WHERE p.active=true GROUP BY p.id ORDER BY revenue DESC LIMIT 10`, [start, end])
     ]);
 
-    const totalRevenue = Number(summary.rows[0].revenue);
-    res.json({ period, generatedAt: new Date().toISOString(), summary: { revenue: totalRevenue, orders: Number(summary.rows[0].orders) }, trend: trend.rows.map(r => ({ month: r.month, revenue: Number(r.revenue) })), regions: regions.rows.map(r => ({ name: r.name, revenue: Number(r.revenue), achievement: Number(r.target_revenue) ? Number(((Number(r.revenue) / Number(r.target_revenue)) * 100).toFixed(1)) : null })), products: products.rows.map(r => ({ name: r.name, orders: Number(r.orders), revenue: Number(r.revenue) })) });
+    res.json({
+      period,
+      generatedAt: new Date().toISOString(),
+      summary: { revenue: Number(summary.rows[0].revenue), orders: Number(summary.rows[0].orders) },
+      trend: trend.rows.map(r => ({ month: r.month, revenue: Number(r.revenue) })),
+      regions: regions.rows.map(r => ({
+        name: r.name,
+        revenue: Number(r.revenue),
+        achievement: Number(r.target_revenue) ? Number(((Number(r.revenue) / Number(r.target_revenue)) * 100).toFixed(1)) : null
+      })),
+      products: products.rows.map(r => ({ name: r.name, orders: Number(r.orders), revenue: Number(r.revenue) }))
+    });
   } catch (error) {
     console.error('dashboard query failed', error);
     res.status(500).json({ error: 'Failed to load dashboard data' });
   }
 });
 
-app.get('*', (_req, res) => res.sendFile(path.join(dashboardDir, 'index.html')));
+app.use((_req, res) => res.sendFile(path.join(dashboardDir, 'index.html')));
 
 const server = app.listen(port, () => console.log(`National Sales API listening on :${port}`));
 
