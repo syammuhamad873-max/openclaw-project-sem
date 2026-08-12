@@ -58,10 +58,17 @@ app.get('/api/dashboard', async (req, res) => {
       pool.query(`SELECT p.name, COUNT(DISTINCT s.order_number) orders, COALESCE(SUM(s.net_amount),0) revenue FROM products p LEFT JOIN sales_orders s ON s.product_id=p.id AND s.status='completed' AND s.order_date >= $1 AND s.order_date < $2 WHERE p.active=true GROUP BY p.id ORDER BY revenue DESC LIMIT 10`, [start, end])
     ]);
 
+    const target = regions.rows.reduce((sum, row) => sum + Number(row.target_revenue), 0);
+    const revenue = Number(summary.rows[0].revenue);
     res.json({
       period,
       generatedAt: new Date().toISOString(),
-      summary: { revenue: Number(summary.rows[0].revenue), orders: Number(summary.rows[0].orders) },
+      summary: {
+        revenue,
+        orders: Number(summary.rows[0].orders),
+        targetAchievement: target ? Number(((revenue / target) * 100).toFixed(1)) : null,
+        conversionRate: null
+      },
       trend: trend.rows.map(r => ({ month: r.month, revenue: Number(r.revenue) })),
       regions: regions.rows.map(r => ({
         name: r.name,
