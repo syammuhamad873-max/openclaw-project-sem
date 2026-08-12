@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dashboard Penjualan Nasional — Executive Sales Intelligence" />
+  <title>National Sales Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.25em] text-teal-400">Executive Sales Intelligence</p>
+        <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Dashboard Penjualan Nasional</h1>
+        <p class="mt-2 text-sm text-slate-400">Ringkasan performa penjualan Indonesia secara real-time-ready.</p>
+      </div>
+      <div class="flex gap-2">
+        <select id="period" class="rounded-xl border border-slate-700 bg-slate-900 px-4 py-2 text-sm outline-none">
+          <option>YTD 2026</option><option>Q3 2026</option><option>Juli 2026</option>
+        </select>
+        <button class="rounded-xl bg-teal-500 px-4 py-2 text-sm font-semibold text-slate-950">Export</button>
+      </div>
+    </header>
+
+    <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <article class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-2xl"><p class="text-sm text-slate-400">Revenue</p><div class="mt-2 text-2xl font-bold">Rp 128,4 M</div><p class="mt-2 text-sm text-teal-400">+18,6% YoY</p></article>
+      <article class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-2xl"><p class="text-sm text-slate-400">Orders</p><div class="mt-2 text-2xl font-bold">84.921</div><p class="mt-2 text-sm text-teal-400">+12,4% YoY</p></article>
+      <article class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-2xl"><p class="text-sm text-slate-400">Target Achievement</p><div class="mt-2 text-2xl font-bold">94,8%</div><p class="mt-2 text-amber-400">−5,2% vs target</p></article>
+      <article class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-2xl"><p class="text-sm text-slate-400">Conversion Rate</p><div class="mt-2 text-2xl font-bold">7,82%</div><p class="mt-2 text-teal-400">+0,9 pts</p></article>
+    </section>
+
+    <section class="mt-6 grid gap-6 xl:grid-cols-3">
+      <div class="xl:col-span-2 rounded-2xl border border-slate-800 bg-slate-900 p-5">
+        <div class="mb-4 flex items-center justify-between"><div><h2 class="font-semibold">Tren Revenue</h2><p class="text-sm text-slate-400">Performa bulanan</p></div><span class="rounded-full bg-teal-500/10 px-3 py-1 text-xs text-teal-300">Live-ready</span></div>
+        <canvas id="revenueChart" height="120"></canvas>
+      </div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+        <h2 class="font-semibold">AI Sales Insight</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-400">Jawa Barat, DKI Jakarta, dan Jawa Timur menyumbang porsi revenue terbesar. Prioritaskan stok produk kategori A dan kampanye repeat-order untuk mempertahankan pertumbuhan.</p>
+        <div class="mt-5 rounded-xl bg-slate-950 p-4"><p class="text-xs uppercase tracking-widest text-slate-500">Rekomendasi</p><p class="mt-2 text-sm">Optimalkan distribusi nasional pada wilayah dengan pertumbuhan >20%.</p></div>
+      </div>
+    </section>
+
+    <section class="mt-6 grid gap-6 lg:grid-cols-2">
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5"><h2 class="font-semibold">Regional Performance</h2><div class="mt-4 space-y-4"><div><div class="mb-1 flex justify-between text-sm"><span>Jawa Barat</span><span>112%</span></div><div class="h-2 rounded-full bg-slate-800"><div class="h-2 w-[92%] rounded-full bg-teal-400"></div></div></div><div><div class="mb-1 flex justify-between text-sm"><span>DKI Jakarta</span><span>105%</span></div><div class="h-2 rounded-full bg-slate-800"><div class="h-2 w-[86%] rounded-full bg-teal-400"></div></div></div><div><div class="mb-1 flex justify-between text-sm"><span>Jawa Timur</span><span>98%</span></div><div class="h-2 rounded-full bg-slate-800"><div class="h-2 w-[79%] rounded-full bg-teal-400"></div></div></div><div><div class="mb-1 flex justify-between text-sm"><span>Sumatera Utara</span><span>91%</span></div><div class="h-2 rounded-full bg-slate-800"><div class="h-2 w-[72%] rounded-full bg-teal-400"></div></div></div></div></div>
+      <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5"><h2 class="font-semibold">Top Products</h2><div class="mt-4 overflow-x-auto"><table class="w-full text-left text-sm"><thead class="text-slate-500"><tr><th class="pb-3">Produk</th><th class="pb-3">Orders</th><th class="pb-3">Revenue</th></tr></thead><tbody class="divide-y divide-slate-800"><tr><td class="py-3">Product A</td><td class="py-3">14.280</td><td class="py-3">Rp 31,2 M</td></tr><tr><td class="py-3">Product B</td><td class="py-3">11.905</td><td class="py-3">Rp 24,8 M</td></tr><tr><td class="py-3">Product C</td><td class="py-3">9.710</td><td class="py-3">Rp 18,6 M</td></tr></tbody></table></div></div>
+    </section>
+  </main>
+  <script>
+    new Chart(document.getElementById('revenueChart'), { type: 'line', data: { labels: ['Jan','Feb','Mar','Apr','Mei','Jun','Jul'], datasets: [{ label: 'Revenue (M)', data: [14,16,17,19,20,21,21.4], tension: 0.35, borderWidth: 3, fill: false }] }, options: { responsive: true, plugins: { legend: { labels: { color: '#cbd5e1' } } }, scales: { x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,.08)' } }, y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,.08)' } } } } });
+  </script>
+</body>
+</html>
