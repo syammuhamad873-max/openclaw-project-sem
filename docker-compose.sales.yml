@@ -3,14 +3,14 @@ services:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_DB: sales
-      POSTGRES_USER: sales_app
-      POSTGRES_PASSWORD: change-this-password
+      POSTGRES_DB: ${POSTGRES_DB:-sales}
+      POSTGRES_USER: ${POSTGRES_USER:-sales_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
     volumes:
       - sales_postgres_data:/var/lib/postgresql/data
       - ./db/schema.sql:/docker-entrypoint-initdb.d/001-schema.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sales_app -d sales"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sales_app} -d ${POSTGRES_DB:-sales}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -24,7 +24,7 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3000
-      DATABASE_URL: postgresql://sales_app:change-this-password@postgres:5432/sales
+      DATABASE_URL: postgresql://${POSTGRES_USER:-sales_app}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-sales}
       DATABASE_SSL: "false"
     ports:
       - "3000:3000"
