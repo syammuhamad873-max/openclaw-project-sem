@@ -1,0 +1,3 @@
+## 2026-09-11 - Route-Based Code Splitting with React.lazy in Dashboard
+**Learning:** React Router routes were statically importing heavy page components (including heavy libraries like recharts), resulting in a single monolithic JS bundle of ~660 kB. By dynamically importing route components (`Dashboard` and `Report`) using `React.lazy` and `Suspense`, Vite automatically creates separate async chunk bundles, splitting the code and reducing initial bundle size significantly (~265 kB initial main JS chunk).
+**Action:** Always check routing configurations in SPA apps for opportunities to apply route-based code splitting, especially when routes import heavy charting or UI components.
