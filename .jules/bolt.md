@@ -1,0 +1,3 @@
+## 2026-10-11 - Route-based Code Splitting in Enterprise Dashboard
+**Learning:** The enterprise dashboard app bundles `recharts` (~338 kB) and page components statically, resulting in a 660 kB initial bundle size that triggers Vite chunk size warnings. Using `React.lazy` and `Suspense` for page routes (`Dashboard` and `Report`) defers chart dynamic chunks until visited, dropping the initial JS bundle size to 265.82 kB (~60% reduction).
+**Action:** Always check `App.tsx` routes for static imports of heavy visualization libraries like `recharts` and use `React.lazy` code splitting to isolate chart dependencies into lazy chunks.
