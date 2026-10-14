@@ -1,0 +1,3 @@
+## 2025-05-18 - Route-based Code Splitting with Heavy Charting Libraries
+**Learning:** In Vite/React applications using heavy third-party visualization libraries like `recharts`, statically importing page routes bundles the entire charting library into the entry `index.js` chunk (~660 kB), exceeding Vite's recommended chunk threshold. Using `React.lazy` and `React.Suspense` for route components automatically splits recharts and page JS into separate chunks, cutting initial bundle size by ~60% (from 660 kB down to 265 kB).
+**Action:** Always check if heavy libraries like `recharts` are imported directly on entry routes, and convert page components to `React.lazy` imports.
