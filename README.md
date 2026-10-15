@@ -1,25 +1,29 @@
-# OpenClaw Project
+# National Sales Intelligence Platform
 
-OpenClaw Project adalah proyek open source yang berfokus pada dokumentasi, konfigurasi, dan eksperimen AI Agent menggunakan OpenClaw.
+Platform dashboard penjualan nasional dan fondasi AI Sales Intelligence yang dikembangkan di atas repository OpenClaw Project.
 
-## Features
+## Current build
 
-- OpenClaw setup guide
-- VPS deployment documentation
-- Configuration examples
-- AI Agent experiments
+Branch aktif untuk pengembangan: `feature/national-sales-dashboard`
 
-## Installation
+- Executive sales dashboard responsive
+- Dynamic period filtering
+- Production Node.js/Express API
+- PostgreSQL schema dan indexing dasar
+- Docker deployment stack
+- Health endpoint
+- API-to-dashboard integration dengan demo fallback untuk UI development
 
-Documentation is under development.
+## Production architecture
 
-## Roadmap
+`Browser → Express API → PostgreSQL`
 
-- [ ] Complete installation guide
-- [ ] Configuration examples
-- [ ] AI Agent tutorials
-- [ ] Deployment scripts
+Data penjualan disimpan pada `sales_orders`, dengan master data `regions` dan `products`.
 
-## License
+## Important
 
-MIT License
+Data pada `dashboard/data.js` adalah data demo. Data tersebut bukan data penjualan nyata. Sebelum go-live, isi database harus berasal dari sumber transaksi resmi dan konfigurasi keamanan produksi harus diterapkan.
+
+## Documentation
+
+Lihat `DEPLOYMENT_SALES.md` untuk deployment dan batas kesiapan produksi.

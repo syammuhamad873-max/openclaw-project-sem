@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="National Sales Intelligence Dashboard"><title>National Sales Intelligence</title>
+<script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script><link rel="stylesheet" href="styles.css">
+</head>
+<body><div class="app">
+<aside class="sidebar"><div class="brand"><div class="brand-mark">NS</div><div><strong>National Sales</strong><span>Intelligence Platform</span></div></div>
+<nav class="nav">
+<button class="active" data-title="Dashboard Penjualan Nasional"><span>◈</span>Overview</button><button data-title="Analitik Penjualan"><span>◫</span>Sales Analytics</button><button data-title="Performa Regional"><span>◎</span>Regional</button><button data-title="Produk & Kategori"><span>◇</span>Products</button><button data-title="Pelanggan"><span>◉</span>Customers</button><button data-title="Laporan"><span>▤</span>Reports</button><button data-title="AI Sales Copilot"><span>✦</span>AI Copilot</button></nav>
+<div class="side-bottom"><div class="status"><i class="dot"></i><span>Data pipeline operational</span></div><div class="status" style="margin-top:8px">v0.3 • Data-driven build</div></div></aside>
+<main class="main"><header class="topbar"><div><div class="eyebrow">Executive Sales Intelligence</div><h1 class="title" id="pageTitle">Dashboard Penjualan Nasional</h1><p class="subtitle">Pemantauan performa bisnis Indonesia dalam satu pusat kendali.</p></div><div class="actions"><select id="period" class="select"><option>YTD 2026</option><option>Q3 2026</option><option>Juli 2026</option></select><button class="btn" id="refresh">Refresh</button><button class="btn primary" id="export">Export</button></div></header>
+<section class="grid-kpi">
+<article class="card"><div class="kpi-head"><span>Total Revenue</span><span class="kpi-icon">↗</span></div><div class="kpi-value" id="revenueKpi">—</div><div class="delta up" id="revenueDelta">▲ — YoY</div></article>
+<article class="card"><div class="kpi-head"><span>Total Orders</span><span class="kpi-icon">▣</span></div><div class="kpi-value" id="ordersKpi">—</div><div class="delta up">▲ 12,4% YoY</div></article>
+<article class="card"><div class="kpi-head"><span>Target Achievement</span><span class="kpi-icon">◎</span></div><div class="kpi-value" id="targetKpi">—</div><div class="delta warn" id="targetDelta">● dibanding target</div></article>
+<article class="card"><div class="kpi-head"><span>Conversion Rate</span><span class="kpi-icon">⌁</span></div><div class="kpi-value" id="conversionKpi">—</div><div class="delta up">▲ 0,9 pts</div></article>
+</section>
+<section class="dashboard-grid"><article class="card"><div class="card-title"><div><h2>Revenue Trend</h2><div class="muted">Performa bulanan • <span id="periodLabel">YTD 2026</span></div></div><span class="pill">DATA-DRIVEN</span></div><div class="chart-wrap"><canvas id="revenueChart"></canvas></div></article>
+<article class="card"><div class="card-title"><div><h2>AI Sales Insight</h2><div class="muted">Executive recommendation</div></div><span class="pill">AI</span></div><div class="insight"><strong>Momentum positif:</strong> Jawa Barat, DKI Jakarta, dan Jawa Timur menjadi kontributor utama. Pertumbuhan regional tertentu telah melampaui 20%.</div><div class="recommendation"><b>Rekomendasi prioritas</b><br>Alihkan kapasitas distribusi dan stok kategori A ke wilayah dengan pertumbuhan tertinggi. Pantau repeat-order dan margin agar pertumbuhan tidak mengorbankan profitabilitas.</div><div class="insight"><strong>Risiko:</strong> pencapaian nasional masih di bawah target. Fokus pada wilayah dengan achievement rendah.</div></article></section>
+<section class="lower"><article class="card"><div class="card-title"><div><h2>Regional Performance</h2><div class="muted">Achievement terhadap target</div></div><span class="pill">34 PROVINSI</span></div><div class="region" id="regionList"></div></article>
+<article class="card"><div class="card-title"><div><h2>Top Products</h2><div class="muted">Revenue contribution</div></div><span class="pill">TOP 5</span></div><div class="table-wrap"><table class="table"><thead><tr><th>Produk</th><th>Orders</th><th>Revenue</th><th>Growth</th></tr></thead><tbody id="productRows"></tbody></table></div></article></section>
+<div class="footer-note" id="updatedAt">Data terstruktur untuk UI development • belum terhubung ke database produksi</div>
+</main></div><script src="data.js"></script><script src="app.js"></script></body></html>
