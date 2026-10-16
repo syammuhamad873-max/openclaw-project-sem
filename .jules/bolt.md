@@ -1,0 +1,3 @@
+## 2026-10-16 - Route-Based Code Splitting for Heavy Charting Libraries
+**Learning:** Static imports of heavy charting components (e.g. `recharts`) at the top level of route pages bundle entire visualization dependencies into the main entry bundle (`index.js`). This bloated the initial JS bundle to >660 kB. Using `React.lazy` and `React.Suspense` for route definitions splits `recharts` and page logic into dynamic chunks, reducing the initial entry bundle payload by ~60% down to ~260 kB.
+**Action:** Always wrap heavy route components in `React.lazy` when using client-side routing with React Router to defer loading heavy libraries until page navigation.
